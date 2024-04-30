@@ -1,19 +1,17 @@
-# e61 Institute Micronote LaTeX template
+# e61 Institute Portrait Research Note LaTeX template
 
-This Github repo hosts the LaTeX template for e61 Institute Micronotes.
-
-If you are looking for the research note template, click [here](https://github.com/e61-Institute/research-note-template).
+This Github repo hosts the LaTeX template for e61 Institute Portrait Reseach Notes.
 
 ## How to load the template into your Overleaf
 
-1. Download a copy of the template by clicking [here](https://github.com/e61-Institute/micronote-template/zipball/master) (or by clicking on the green "Code" button, then "Download ZIP").
+1. Download a copy of the template by clicking [here](https://github.com/e61-Institute/portrait-research-note-template/zipball/master) (or by clicking on the green "Code" button, then "Download ZIP").
 2. On the [Overleaf website](https://www.overleaf.com/project), click on "New Project", then "Upload Project".
 3. Drag and drop the downloaded Zip file as per the instructions.
 4. Change the LaTeX compiler to XeLaTeX, otherwise nothing will compile: click on "Menu" in the top-left corner, go to the "Settings" section, click the drop-down box next to "Compiler", select "XeLaTeX".
 
 ## Separating out the main note from the appendices
 
-You should generate separate PDFs for the main body of the micronote and the appendices. This can be done using the `pagesel` package that is conveniently commented out in the template. This package allows you to select which pages of a document to render as a PDF.
+You should generate separate PDFs for the main body of the research note and the appendices. This can be done using the `pagesel` package that is conveniently commented out in the template. This package allows you to select which pages of a document to render as a PDF.
 
 How to use:
 
