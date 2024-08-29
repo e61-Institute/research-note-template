@@ -7,10 +7,17 @@
 
 \LoadClass[10pt,twoside]{book}
 
-\RequirePackage[paperwidth=215.9mm,paperheight=279.4mm,
-top=9mm,bottom=18mm,left=15mm,right=15mm,
-footskip=3mm,
-marginparwidth=0in]{geometry}
+\RequirePackage[
+    paperwidth=215.9mm,
+    paperheight=279.4mm,
+    top=9mm,
+    bottom=18mm,
+    left=15mm,
+    right=15mm,
+    footskip=10mm,
+    %footskip=3mm,
+    marginparwidth=0in
+]{geometry}
 \setlength{\columnsep}{19mm}
 
 \RequirePackage[T1]{fontenc}
@@ -131,7 +138,7 @@ label=\raisebox{-0.4\height}{\scalebox{2.2}{\color{green1}\textbullet}}}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
 
-\titleformat{\chapter}[display]{\thispagestyle{e61-micronote}\raggedright\color{green1}}{}{0pt}%
+\titleformat{\chapter}[display]{\thispagestyle{e61-rn-first-page}\raggedright\color{green1}}{}{0pt}%
 {\fontsize{25}{32}\selectfont#1~\thechapter}[]
 \renewcommand\thechapter{}
 
@@ -223,7 +230,7 @@ label=\raisebox{-0.4\height}{\scalebox{2.2}{\color{green1}\textbullet}}}
 \newcommand{\imagesource}[1]{{\parskip=0pt\baselineskip=13pt\fontsize{7pt}{9}\selectfont\par #1}}
 % ---------------------------------------------------------------------
 \renewcommand{\maketitle}{%
-		\thispagestyle{empty}
+		\thispagestyle{e61-micronote}
 \begin{tikzpicture}[remember picture,overlay]
 %%%
 
@@ -256,33 +263,53 @@ at($(STIT.south west)!0.5!(AUT.north west)$)
 \vspace{35mm}
 }
 
+%%%%%%%FIRST PAGE OF RESEARCH NOTE STYL
+\RequirePackage{geometry}
+
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
+
+\fancypagestyle{e61-rn-first-page}{%
+\renewcommand{\headrulewidth}{0pt}
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \newgeometry{
+    paperwidth=215.9mm,
+    %paperheight=279.4mm,
+    paperheight=150mm,
+    top=9mm,
+    bottom=18mm,
+    left=15mm,
+    right=15mm,
+    footskip=10mm,
+    %footskip=3mm,
+    marginparwidth=0in
+  }
+}
+
+%%%%%%%REGULAR PAGE STYLE
 \fancypagestyle{e61-micronote}{%
 \renewcommand{\headrulewidth}{0pt}
   \fancyhf{}%
-%
-\fancyfoot{%
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north west,rectangle,
-minimum width=\textwidth,minimum height=9mm,
-fill=gray1]
-(FB)at (current page footer area.south west){};
-\node[anchor=west,inner xsep=0pt]
-at([xshift=1mm]FB.west) {\includegraphics[scale=1.0]{e61_logo2}};
-\node[anchor=east,black,font={\fontsize{10pt}{10}\selectfont\Bebas},inner xsep=0pt]
-at([xshift=-1mm]FB.east) {\@title};
-\end{tikzpicture}}
+  \fancyfoot[C]{\thepage}%
+  \newgeometry{
+    paperwidth=215.9mm,
+    paperheight=279.4mm,
+    top=9mm,
+    bottom=18mm,
+    left=15mm,
+    right=15mm,
+    footskip=10mm,
+    %footskip=3mm,
+    marginparwidth=0in
+  }
 }
 
+%%%%%%%FIRST PAGE OF APPENDIX STYLE
 \fancypagestyle{first}{%
 \renewcommand{\headrulewidth}{0pt}
   \fancyhf{}%
-\fancyfoot{%
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north,inner xsep=0pt]
-at([yshift=0mm]current page footer area.south) {\thepage};
-\end{tikzpicture}}
+  \fancyfoot[C]{\thepage}%
 }
 
 \RequirePackage[colorlinks,allcolors=blue]{hyperref} %
@@ -305,19 +332,34 @@ top=0.5mm,bottom=0.5mm,boxsep=2mm,arc=0mm,
 
 \newtcolorbox[auto counter,%number within=chapter,
 number freestyle={\noexpand\arabic{\tcbcounter}}]{Boxx}[2][]{%
-  enhanced, breakable,
-detach title, before upper={\fontsize{10pt}{13}\selectfont}, colframe=green3,
-attach boxed title to top center={yshift=-\tcboxedtitleheight,yshifttext=-5mm},
-colupper=black,colback=boxback, boxed title style={empty}, coltitle=black,
-fonttitle=\bfseries,center title, left=0mm,right=0mm,
-top=0mm,bottom=0mm,boxsep=2mm,arc=0mm, boxrule=1.5pt,
+  enhanced, 
+  breakable,
+  detach title, 
+  before upper={\fontsize{10pt}{13}\selectfont}, 
+  colframe=green3,
+  attach boxed title to top center={yshift=-\tcboxedtitleheight,yshifttext=-5mm},
+  colupper=black,
+  colback=boxback,
+  boxed title style={empty},
+  coltitle=black,
+  fonttitle=\bfseries,
+  center title, 
+  left=0mm,
+  right=0mm,
+  top=0mm,
+  bottom=0mm,
+  boxsep=2mm,
+  arc=0mm, 
+  boxrule=1.5pt,
+  title=Box~\thetcbcounter\ifx\hfuzz#2\hfuzz\else:~~#2\fi,
+  #1
 %title=#2,
-title=Box~\thetcbcounter\ifx\hfuzz#2\hfuzz\else:~~#2\fi,
-#1 }
+}
 
 \RequirePackage{footmisc}%[perpage]
 \enlargethispage{\baselineskip}
 \interfootnotelinepenalty=100000
+\interlinepenalty=0
 %\interfootnotelinepenalty=\@M
 %\widowpenalty-10000
 
