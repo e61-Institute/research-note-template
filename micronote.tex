@@ -19,9 +19,9 @@
 \emergencystretch=5pt
 \sloppy
 
-\title{EXAMPLE MICRONOTE! ~\newline A SAMPLE DOCUMENT FOR A MICRONOTE}
-\SubTitle{e61 MICRO NOTE | 26 June 2023}
-\author{Aaron Wong}
+\title{Example portrait research note ~\newline this is a sample document only}
+\SubTitle{e61 Research Note | 22 November 2024}
+\author{Jack Buckley}
 
 \maketitle
 
@@ -34,15 +34,28 @@
 \end{itemize}
 \end{Boxx}
 
-\lipsum[1] This is an example of a citation \parencite{Fitzgerald20,Ziffer20}.
+\lipsum[1] 
+
+This is an example of a citation \parencite{Fitzgerald20,Ziffer20}.
 
 \lipsum[2]\footnote{\lipsum[3]}
 
 \begin{figure}[h]
-\caption{Rents and Distance to Capital City Centres*}
-\label{fig:bins}
-\includegraphics[scale=0.8]{sample fig 1.pdf}\centering
+\caption{Example figure*}
+\label{fig:example_a}
+\includegraphics[scale=0.8]{example-image-a}\centering
 \end{figure}
+
+This is an example of a within-document location reference to Box \ref{box:example_box}. 
+
+\begin{Boxx}[label=box:example_box]{Example of a in text box}
+\setstretch{1}
+\lipsum[][1-2]
+\begin{itemize}[noitemsep]
+    \item \lipsum[2][1]
+    \item \lipsum[3][1]
+\end{itemize}
+\end{Boxx}
 
 \lipsum[4] This is an example of a within-document location reference to Appendix \ref{app:regs}. 
 
