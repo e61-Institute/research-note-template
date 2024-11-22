@@ -288,7 +288,7 @@ at($(STIT.south west)!0.5!(AUT.north west)$)
 }
 
 %%%%%%%REGULAR PAGE STYLE
-\fancypagestyle{e61-micronote}{%
+\fancypagestyle{e61-research-note}{%
 \renewcommand{\headrulewidth}{0pt}
   \fancyhf{}%
   \fancyfoot[C]{\thepage}%
