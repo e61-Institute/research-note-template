@@ -6,6 +6,7 @@
 
 \usepackage{lipsum} % This is just here to allow the filler text to be generated, remove for real notes
 
+\usepackage[useregional]{datetime2} % For accurate dates of the note
 \usepackage{prettyneq} % Fix for neq symbol
 
 \pagestyle{e61-research-note}
@@ -20,7 +21,7 @@
 \sloppy
 
 \title{Example portrait research note ~\newline this is a sample document only}
-\SubTitle{e61 Research Note | 22 November 2024}
+\SubTitle{e61 Research Note | \number\day \DTMmonthname{\month} \number\year}
 \author{Jack Buckley}
 
 \maketitle
