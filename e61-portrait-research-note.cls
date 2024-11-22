@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{e61-micronote}
-          [2023/05/22 v1 e61 Micro Note]
+\ProvidesClass{e61-portrait-research-note}
+          [2024/11/22 v1 e61 Research Note]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions\relax
