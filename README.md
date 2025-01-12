@@ -1,6 +1,8 @@
-# e61 Institute Portrait Research Note LaTeX template
+# e61 Institute Research Note LaTeX template
 
-This Github repo hosts the LaTeX template for e61 Institute Portrait Reseach Notes.
+This Github repo hosts the LaTeX template for e61 Institute Reseach Notes.
+
+If you are looking for the micro note template, click [here](https://github.com/e61-Institute/micronote-template).
 
 ## How to load the template into your Overleaf
 
