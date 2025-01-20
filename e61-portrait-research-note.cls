@@ -390,7 +390,7 @@ number freestyle={\noexpand\arabic{\tcbcounter}}]{Boxx}[2][]{%
 
 \let\oldappendix\appendix
 \renewcommand{\appendix}{%\pagestyle{plain}%
-\setcounter{page}{0}
+%\setcounter{page}{0}
 \setcounter{figure}{0}\setcounter{table}{0}%
 \counterwithin{figure}{chapter}%
 \counterwithin{table}{chapter}%
