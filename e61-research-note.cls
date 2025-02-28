@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{e61-portrait-research-note}
+\ProvidesClass{e61-research-note}
           [2024/11/22 v1 e61 Research Note]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
@@ -230,7 +230,7 @@ label=\raisebox{-0.4\height}{\scalebox{2.2}{\color{green1}\textbullet}}}
 \newcommand{\imagesource}[1]{{\parskip=0pt\baselineskip=13pt\fontsize{7pt}{9}\selectfont\par #1}}
 % ---------------------------------------------------------------------
 \renewcommand{\maketitle}{%
-		\thispagestyle{e61-micronote}
+		\thispagestyle{e61-research-note}
 \begin{tikzpicture}[remember picture,overlay]
 %%%
 
