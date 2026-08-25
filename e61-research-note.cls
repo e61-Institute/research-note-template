@@ -388,6 +388,10 @@
 %% ----------------------------------------------------------------------
 
 \newcommand{\SubTitle}[1]{\def\@SubTitle{#1}}
+% \NoteNumber{...} sets this note's reference number (e.g. \NoteNumber{2025-03}),
+% shown on the title page next to the subtitle. Left unset, nothing is shown.
+\newcommand{\NoteNumber}[1]{\def\@NoteNumber{#1}}
+\def\@NoteNumber{}
 % \imagesource{...} typesets a small caption-style credit line, e.g.
 % under a figure sourced from an external site.
 \newcommand{\imagesource}[1]{{\parskip=0pt\baselineskip=13pt\fontsize{7pt}{9}\selectfont\par #1}}
@@ -398,6 +402,11 @@
 % the note.
 \renewcommand{\maketitle}{%
     \thispagestyle{e61-research-note}
+    % \title/\author are set after \begin{document} in this class's usual
+    % pattern, too late for hyperref's own automatic pdftitle/pdfauthor
+    % capture (which runs at \begin{document}), so set them here instead -
+    % this is what hyperxmp (see "CROSS-REFERENCE NUMBERING & HYPERREF") embeds as PDF metadata.
+    \hypersetup{pdftitle={\@title}, pdfauthor={\@author}}
     \begin{tikzpicture}[remember picture,overlay]
         % Green banner background, anchored to the top of the page.
         \node[anchor=north west,rectangle,
@@ -414,7 +423,7 @@
         \node[text width=155mm,inner sep=0pt,align=left,
               anchor=west,font={\bfseries\color{white}\fontsize{9pt}{9}\selectfont}]
              (STIT) at ([xshift=5mm,yshift=-4mm]GB.north west)
-             {\@SubTitle};
+             {\@SubTitle\ifx\@NoteNumber\@empty\else\ |\ No.~\@NoteNumber\fi};
 
         % Author, bottom-left of the banner.
         \node[text width=155mm,inner sep=0pt,align=left,
@@ -488,6 +497,10 @@
 
 \RequirePackage[colorlinks,allcolors=blue]{hyperref}
 \RequirePackage{bookmark} % more robust PDF bookmarks/outline than hyperref alone provides
+% Embeds \title/\author/\date (already set via hyperref's pdftitle/pdfauthor)
+% as XMP metadata in the PDF, which search engines and indexers such as
+% Google Scholar read to identify a document's title and authors.
+\RequirePackage{hyperxmp}
 
 % Figures/tables/equations are numbered continuously (1, 2, 3, ...)
 % rather than per-chapter; this is overridden again in the appendix.
