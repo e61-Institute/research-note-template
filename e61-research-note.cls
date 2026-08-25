@@ -13,7 +13,7 @@
 %%    5. Captions
 %%    6. Colours
 %%    7. Paragraph & equation spacing
-%%    8. Boxed content (mdframed / tcolorbox)
+%%    8. Boxed content (tcolorbox)
 %%    9. Graphics
 %%   10. Lists (itemize / enumerate, incl. custom "C" variants)
 %%   11. TikZ & table-width helpers
@@ -60,8 +60,9 @@
 %%  2. FONTS
 %% ----------------------------------------------------------------------
 % Font files live in ./fonts/ relative to the document being compiled.
-
-\RequirePackage[T1]{fontenc}
+% (No \usepackage{fontenc} here: fontspec selects fonts directly by
+% file/Unicode glyph under XeLaTeX, so the old 8-bit T1 encoding setup
+% has no effect and isn't needed.)
 \RequirePackage[no-math]{fontspec}
 
 \setmainfont{PTSans-Regular.ttf}[
@@ -187,18 +188,9 @@
 %% ----------------------------------------------------------------------
 %%  8. BOXED CONTENT
 %% ----------------------------------------------------------------------
-
-\RequirePackage{mdframed}
-\mdfdefinestyle{box1}{%
-    linecolor          = black,
-    outerlinewidth     = 1pt,
-    innertopmargin     = 1\baselineskip,
-    innerbottommargin  = 2\baselineskip,
-    innerrightmargin   = 20pt,
-    innerleftmargin    = 20pt,
-    align              = center,
-    backgroundcolor    = white
-}
+% tcolorbox is the actively-maintained, modern package for drawing
+% boxes like these (it superseded older box packages such as mdframed
+% for most uses), so all boxed environments here are built on it.
 
 \RequirePackage[many]{tcolorbox}
 
@@ -250,7 +242,9 @@
 
 \RequirePackage{graphicx}
 \graphicspath{{./figures/}}
-\RequirePackage{soulutf8} % \hl, \st, etc. with UTF-8 support
+% \hl, \st, etc. soulutf8 (the old UTF-8 shim for this package) is
+% itself obsolete: soul has taken over UTF-8 support natively since v3.1.
+\RequirePackage{soul}
 \RequirePackage{xurl}     % allow URLs to break across lines
 \urlstyle{same}
 
@@ -493,6 +487,7 @@
 %% ----------------------------------------------------------------------
 
 \RequirePackage[colorlinks,allcolors=blue]{hyperref}
+\RequirePackage{bookmark} % modern replacement for hyperref's built-in (legacy) PDF outline/bookmark code
 
 % Figures/tables/equations are numbered continuously (1, 2, 3, ...)
 % rather than per-chapter; this is overridden again in the appendix.
