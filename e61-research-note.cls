@@ -60,9 +60,8 @@
 %%  2. FONTS
 %% ----------------------------------------------------------------------
 % Font files live in ./fonts/ relative to the document being compiled.
-% (No \usepackage{fontenc} here: fontspec selects fonts directly by
-% file/Unicode glyph under XeLaTeX, so the old 8-bit T1 encoding setup
-% has no effect and isn't needed.)
+% fontspec selects fonts directly by file/Unicode glyph under XeLaTeX,
+% so fontenc's 8-bit encoding setup is unnecessary here.
 \RequirePackage[no-math]{fontspec}
 
 \setmainfont{PTSans-Regular.ttf}[
@@ -77,10 +76,9 @@
 % (e.g. {\Bebas ...}) rather than as the running body font.
 \newfontfamily{\Bebas}{BebasNeue Bold.ttf}[Path=./fonts/]              % title page heading
 \newfontfamily{\Author}{PTSans-Bold.ttf}[Path=./fonts/,LetterSpace=15] % available for author-name styling
-% Figure/table caption font. Matches \setmainfont above - PT Sans, not
-% Arial (an old theme61 holdover from when that package used Arial;
-% Arial also isn't a font bundled with this template, so relying on it
-% being installed system-wide silently drops caption text if it isn't).
+% Figure/table caption font: the same PT Sans files as \setmainfont
+% above, kept as a separate family so captions can be restyled
+% independently of the body text.
 \newfontfamily{\Caption}{PTSans-Regular.ttf}[Path=./fonts/,
     BoldFont       = PTSans-Bold.ttf,
     ItalicFont     = PTSans-Italic.ttf,
@@ -161,10 +159,8 @@
 }
 \renewcommand{\thesubfigure}{\Alph{subfigure}} % A, B, C, ... instead of a, b, c, ...
 
-% The Table of Contents heading (\contentsname) is only defined per
-% babel language variant; since the document language is English this
-% patches the English variant (this used to target "german" - a
-% copy-paste leftover from the babel example that had no effect).
+% \contentsname ("Contents") is defined per babel language variant, so
+% it's patched via \captionsenglish to match the [english] babel option above.
 \addto\captionsenglish{
   \renewcommand{\contentsname}{Contents}
 }
@@ -195,9 +191,8 @@
 %% ----------------------------------------------------------------------
 %%  8. BOXED CONTENT
 %% ----------------------------------------------------------------------
-% tcolorbox is the actively-maintained, modern package for drawing
-% boxes like these (it superseded older box packages such as mdframed
-% for most uses), so all boxed environments here are built on it.
+% All boxed environments below (summarybox, Boxx) are built on
+% tcolorbox, so they share one consistent styling engine.
 
 \RequirePackage[many]{tcolorbox}
 
@@ -249,9 +244,7 @@
 
 \RequirePackage{graphicx}
 \graphicspath{{./figures/}}
-% \hl, \st, etc. soulutf8 (the old UTF-8 shim for this package) is
-% itself obsolete: soul has taken over UTF-8 support natively since v3.1.
-\RequirePackage{soul}
+\RequirePackage{soul} % \hl, \st, etc. - has built-in UTF-8 support
 \RequirePackage{xurl}     % allow URLs to break across lines
 \urlstyle{same}
 
@@ -494,7 +487,7 @@
 %% ----------------------------------------------------------------------
 
 \RequirePackage[colorlinks,allcolors=blue]{hyperref}
-\RequirePackage{bookmark} % modern replacement for hyperref's built-in (legacy) PDF outline/bookmark code
+\RequirePackage{bookmark} % more robust PDF bookmarks/outline than hyperref alone provides
 
 % Figures/tables/equations are numbered continuously (1, 2, 3, ...)
 % rather than per-chapter; this is overridden again in the appendix.
