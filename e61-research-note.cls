@@ -77,7 +77,14 @@
 % (e.g. {\Bebas ...}) rather than as the running body font.
 \newfontfamily{\Bebas}{BebasNeue Bold.ttf}[Path=./fonts/]              % title page heading
 \newfontfamily{\Author}{PTSans-Bold.ttf}[Path=./fonts/,LetterSpace=15] % available for author-name styling
-\newfontfamily{\Caption}{Arial}                                       % figure/table caption font
+% Figure/table caption font. Matches \setmainfont above - PT Sans, not
+% Arial (an old theme61 holdover from when that package used Arial;
+% Arial also isn't a font bundled with this template, so relying on it
+% being installed system-wide silently drops caption text if it isn't).
+\newfontfamily{\Caption}{PTSans-Regular.ttf}[Path=./fonts/,
+    BoldFont       = PTSans-Bold.ttf,
+    ItalicFont     = PTSans-Italic.ttf,
+    BoldItalicFont = PTSans-BoldItalic.ttf]
 
 %% ----------------------------------------------------------------------
 %%  3. LANGUAGE & GENERAL-PURPOSE PACKAGES
@@ -131,7 +138,7 @@
     labelsep      = colon,
     belowskip     = 0pt,
     aboveskip     = 0pt,
-    justification = centering,
+    justification = raggedright, % left-aligned, to match theme61's left-aligned graph titles
     singlelinecheck = false,
     font          = {bf,ninept}
 }
@@ -148,7 +155,7 @@
     labelsep    = colon,
     labelfont   = bf,
     font        = {bf,footnotesize},
-    justification = centering,
+    justification = raggedright, % match the left-aligned figure captions above
     belowskip   = 0pt,
     aboveskip   = 6pt
 }
