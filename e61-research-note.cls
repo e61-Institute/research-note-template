@@ -196,12 +196,27 @@
 
 \RequirePackage[many]{tcolorbox}
 
+% Base font size for boxed content (summarybox, Boxx) -- 1pt smaller than
+% the document's own base size by default, matching e61 house style. Change
+% the default everywhere by redefining \BoxFontSize/\BoxBaselineSkip, or
+% override a single box via the boxfontsize key, e.g.
+% \begin{Boxx}[boxfontsize=8pt]{Title}.
+\newcommand{\BoxFontSize}{9pt}
+\newcommand{\BoxBaselineSkip}{12pt}
+\tcbset{boxfontsize/.store in=\tcb@boxfontsize}
+
 % \begin{summarybox} ... \end{summarybox}
 % Shaded box with no title, used for "key findings" style summaries.
 \newtcolorbox{summarybox}[1][]{%
     enhanced, breakable,
     detach title,
-    before upper = {\fontsize{10pt}{14}\selectfont\baselineskip=16pt},
+    boxfontsize = \BoxFontSize,
+    % \parskip is set explicitly (matching the document's own \parskip,
+    % see PARAGRAPH & EQUATION SPACING above) rather than left to inherit
+    % from context -- multi-paragraph box content was otherwise spacing
+    % paragraphs differently than the surrounding body text.
+    before upper = {\fontsize{\tcb@boxfontsize}{14}\selectfont\baselineskip=16pt
+                    \parskip=6pt plus 2pt minus 2pt},
     colupper = black, colback = gray1,
     boxrule = 0pt, frame hidden,
     left = 0.5mm, right = 0.5mm,
@@ -220,7 +235,10 @@
     enhanced,
     breakable,
     detach title,
-    before upper = {\fontsize{10pt}{13}\selectfont},
+    boxfontsize = \BoxFontSize,
+    % See summarybox above re: explicit \parskip.
+    before upper = {\fontsize{\tcb@boxfontsize}{\BoxBaselineSkip}\selectfont
+                    \parskip=6pt plus 2pt minus 2pt},
     colframe = green3,
     attach boxed title to top center = {yshift=-\tcboxedtitleheight,yshifttext=-5mm},
     colupper = black,
@@ -301,6 +319,18 @@
 % e.g. \begin{tabular}{p{\mylengtht}} ... \end{tabular}.
 \def\mylengtht{\textwidth-2\tabcolsep-1.25\arrayrulewidth}
 \def\mylengthc{\columnwidth-2\tabcolsep-1.25\arrayrulewidth}
+
+% Table content is 1pt smaller than body text by default (e61 house
+% style), applied at the environment level so it's automatic for every
+% table without authors needing to add a \small themselves. Guarded with
+% \AtBeginDocument since \AtBeginEnvironment requires the environment to
+% already be defined -- \tabular always is (via array, above), but
+% \longtable only exists if the document itself loads that package.
+\RequirePackage{etoolbox}
+\AtBeginDocument{%
+    \AtBeginEnvironment{tabular}{\fontsize{9pt}{11}\selectfont}%
+    \@ifundefined{longtable}{}{\AtBeginEnvironment{longtable}{\fontsize{9pt}{11}\selectfont}}%
+}
 
 \RequirePackage[explicit]{titlesec}
 \setcounter{secnumdepth}{3}
@@ -584,12 +614,14 @@
                  (LOG) at ([xshift=-5mm,yshift=1.0mm]AB.east)
                  {\includegraphics[scale=1.0]{e61_logo1}};
 
-            % "APPENDIX <letter/title>", vertically centred in the banner.
+            % "APPENDIX <letter>: <title>", vertically centred in the banner.
+            % \thechapter is already the appendix letter (A, B, ...) here --
+            % \refstepcounter{chapter} in \@chapter above runs before this.
             \node[inner sep=0pt,align=flush left,
                   text width=150mm,xshift=4mm,
                   anchor=west,font={\color{white}\Bebas\fontsize{19pt}{22}\selectfont}]
                  (TIT) at ($(AB.south west)!0.5!(AB.north west)$)
-                 {APPENDIX~\MakeUppercase{##1}};
+                 {APPENDIX~\thechapter:~\MakeUppercase{##1}};
         \end{tikzpicture}
         \par\nobreak
         \vskip 40\p@}
