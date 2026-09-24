@@ -262,6 +262,44 @@
 
 \RequirePackage{graphicx}
 \graphicspath{{./figures/}}
+
+% Match a figure's caption width and horizontal position to its own
+% image's width instead of the full text width -- otherwise a narrow,
+% centred image still gets a full-width caption starting at the page
+% margin rather than lining up with the image's own left edge.
+%
+% The image's width is only known once \includegraphics has actually
+% been processed, but in this template's convention \caption is written
+% ABOVE \includegraphics (so the caption prints above the figure), i.e.
+% before that width is known in this pass. So the measured width is
+% written to the .aux file and read back from the previous run, exactly
+% like \label/\ref settling over a couple of compile passes -- on a
+% fresh compile (no .aux yet) captions fall back to full width until
+% the next pass. Scoped to \includegraphics calls inside a figure
+% environment; subfigure and table captions are unaffected.
+\RequirePackage{etoolbox}
+\newcounter{@figaux}
+\newlength{\@figimgwidth}
+\newsavebox{\@figimgbox}
+\newcommand{\@figwidthaux}[2]{\expandafter\gdef\csname @figw@#1\endcsname{#2}}
+
+\AtBeginEnvironment{figure}{%
+    \stepcounter{@figaux}%
+    \setlength{\@figimgwidth}{\linewidth}%
+    \@ifundefined{@figw@\arabic{@figaux}}{}{%
+        \setlength{\@figimgwidth}{\csname @figw@\arabic{@figaux}\endcsname}%
+    }%
+    \captionsetup{width=\@figimgwidth}%
+    \let\@includegraphicsorig\includegraphics
+    \renewcommand{\includegraphics}[2][]{%
+        \sbox{\@figimgbox}{\@includegraphicsorig[#1]{#2}}%
+        \setlength{\@figimgwidth}{\wd\@figimgbox}%
+        \captionsetup{width=\@figimgwidth}%
+        \immediate\write\@auxout{\string\@figwidthaux{\arabic{@figaux}}{\the\wd\@figimgbox}}%
+        \usebox{\@figimgbox}%
+    }%
+}
+
 \RequirePackage{soul} % \hl, \st, etc. - has built-in UTF-8 support
 \RequirePackage{xurl}     % allow URLs to break across lines
 \urlstyle{same}
